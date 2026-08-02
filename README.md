@@ -15,7 +15,7 @@ Authoritative runtime configuration service for Nexus Core: schemas, scopes, dra
 ## Dependencies
 
 - `nxc_lib`
-- `nexus_core`
+- `nxc_core`
 - `oxmysql`
 
 ## Installation
