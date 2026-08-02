@@ -1,0 +1,15 @@
+{
+  "name": "nxc_config",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Authoritative runtime configuration service for Nexus Core: schemas, scopes, drafts, publication, audit, rollback.",
+  "author": "The Nexus Core Framework team",
+  "homepage": "https://nxcframework.net",
+  "scripts": {
+    "test": "node --test tests/"
+  },
+  "devDependencies": {
+    "wasmoon": "^1.16.0"
+  }
+}

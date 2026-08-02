@@ -1,0 +1,14 @@
+* text=auto eol=lf
+
+*.md   text diff=markdown
+*.lua  text diff=lua
+*.json text
+*.yml  text
+*.yaml text
+
+*.png binary
+*.jpg binary
+*.webp binary
+*.ico binary
+*.ytd binary
+*.ydr binary

@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build and tool output
+dist/
+build/
+.cache/
+*.tsbuildinfo
+coverage/
+
+# Local operator values. Bootstrap files are committed with blank placeholders
+# only; a filled-in copy must never be committed back.
+config.local.lua
+*.local.lua
+server.cfg
+secrets.*
+
+# Editor and OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
