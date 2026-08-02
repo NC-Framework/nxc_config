@@ -10,11 +10,16 @@ game 'gta5'
 -- offers an official directive for this has not been verified, and is open as
 -- OD-021 rather than assumed either way.
 --
--- nxc_min_server_build reads UNPINNED because no build has been named (OD-020,
--- blocker B-11). A placeholder that fails a check beats a plausible number that
--- passes one: a pinned version is exactly the kind of value nobody re-derives.
+-- nxc_min_server_build is the Enhanced Cfx Server build this was first deployed
+-- against, reported as `b106-ea` on 2026-08-02. OD-020 and blocker B-11 closed.
+--
+-- NOT expressed as a `/server:106` dependency constraint, which is the mechanism
+-- the platform enforces. That constraint compares build numbers, and Legacy
+-- numbers them far HIGHER — around 25770 — so `/server:106` passes trivially on
+-- Legacy and guards nothing. It is added when a resource actually needs a
+-- specific Enhanced build, where it would buy something.
 nxc_platform 'gta5_enhanced'
-nxc_min_server_build 'UNPINNED'
+nxc_min_server_build '106'
 nxc_legacy_compatibility 'none'
 
 author 'The Nexus Core Framework team'
