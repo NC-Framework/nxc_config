@@ -54,6 +54,7 @@ shared_scripts {
     'shared/registry.lua',
     'shared/store.lua',
     'shared/drafts.lua',
+    'shared/publication.lua',
 }
 
 dependencies {
