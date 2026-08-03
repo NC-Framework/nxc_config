@@ -2,6 +2,17 @@
 
 Entries are added only for genuinely user-visible or contract-relevant changes.
 
+## 0.1.1 — 2026-08-03
+
+### Fixed
+
+- Exports return plain tables. Both `register` and `effectiveValues` returned a
+  frozen `Result`, which crosses a resource boundary as `{}` — so registration
+  succeeded here and was reported as refused by the caller. Requires nxc_lib
+  contract 3.
+
+- `NxcConfig.VERSION` is read from the manifest rather than restated.
+
 ## Unreleased
 
 ### Added

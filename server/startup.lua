@@ -50,10 +50,10 @@ CreateThread(function()
     -- CONTRACT_VERSION increments on incompatible change, so a newer library is
     -- not automatically a safer one.
     --
-    -- v2 is the minimum because Nxc.Persistence and Nxc.Migrations arrived in it.
-    -- Against v1 this resource would fail at whatever line first reached them,
-    -- naming a symptom rather than the cause.
-    local LIB_MIN, LIB_MAX = 2, 2
+    -- v3 is the minimum: Nxc.Persistence and Nxc.Migrations arrived in v2, and
+    -- Nxc.plain in v3. Against an older copy this resource would fail at whatever
+    -- line first reached them, naming a symptom rather than the cause.
+    local LIB_MIN, LIB_MAX = 3, 3
     if type(Nxc) ~= 'table' or not Nxc.CONTRACT_VERSION
         or Nxc.CONTRACT_VERSION < LIB_MIN or Nxc.CONTRACT_VERSION > LIB_MAX then
         return halt('nxc_lib is not a version this nxc_config supports.', {

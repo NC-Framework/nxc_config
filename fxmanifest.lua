@@ -24,7 +24,7 @@ nxc_legacy_compatibility 'none'
 
 author 'The Nexus Core Framework team'
 description 'Authoritative runtime configuration service for Nexus Core: schemas, scopes, drafts, publication, audit, rollback.'
-version '0.1.0'
+version '0.1.1'
 
 -- Scripts are ENUMERATED, in load order, rather than globbed. A glob sorts
 -- alphabetically, which is not dependency order.

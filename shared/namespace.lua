@@ -16,7 +16,17 @@
 NxcConfig = NxcConfig or {}
 
 NxcConfig.RESOURCE = 'nxc_config'
-NxcConfig.VERSION = '0.1.0'
+--- Read from the manifest so the version is stated ONCE.
+---
+--- It used to be a literal here as well as in fxmanifest.lua, and they drifted:
+--- the manifest said one thing while every log line said another. Two sources of
+--- truth for a version is one source of truth and one rumour.
+---
+--- The fallback is for the test harness, where no natives exist. It is the only
+--- place a literal can still be wrong, and there it cannot mislead an operator.
+NxcConfig.VERSION = (type(GetResourceMetadata) == 'function'
+    and GetResourceMetadata(GetCurrentResourceName(), 'version', 0))
+    or '0.0.0-test'
 
 --- Contract version of the surface other resources depend on.
 ---

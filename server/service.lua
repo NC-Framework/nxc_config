@@ -149,18 +149,25 @@ end)
 --- Exports, because a consumer in another resource cannot call into this Lua
 --- state directly. This is the case exports are actually for: a service with one
 --- owner, called by many, at a rate measured in restarts rather than frames.
+--- EVERY EXPORT RETURNS A PLAIN TABLE.
+---
+--- A Result is frozen, and a frozen table is raw-empty — its contents live
+--- behind a metatable that FiveM's marshalling does not follow. Returning one
+--- directly sends `{}`, so the caller sees no `ok` field and reports failure
+--- while this side logs success. That is precisely what happened on a real
+--- server before `Nxc.plain` existed.
 exports('register', function(fields)
     local resource = GetInvokingResource()
     if not resource then
         return { ok = false, error = { code = 'NXC_CONFIG_UNKNOWN_CALLER' } }
     end
-    return Service.register(resource, fields)
+    return Nxc.plain(Service.register(resource, fields))
 end)
 
 exports('effectiveValues', function(context)
     local resource = GetInvokingResource()
     if not resource then return {} end
-    return Service.effectiveValues(resource, context)
+    return Nxc.plain(Service.effectiveValues(resource, context))
 end)
 
 exports('isReady', function() return ready end)
