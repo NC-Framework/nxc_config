@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "version": "0.1.0",
+  "license": "MIT",
+  "author": "Ezekiel Hammond — Nexus Core Framework",
   "description": "Authoritative runtime configuration service for Nexus Core: schemas, scopes, drafts, publication, audit, rollback.",
   "author": "The Nexus Core Framework team",
   "homepage": "https://nxcframework.net",
