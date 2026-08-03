@@ -26,9 +26,33 @@ author 'The Nexus Core Framework team'
 description 'Authoritative runtime configuration service for Nexus Core: schemas, scopes, drafts, publication, audit, rollback.'
 version '0.1.0'
 
--- No script blocks are declared yet: this resource has no code, and a manifest
--- that declares files which do not exist is a lie the server may tolerate and a
--- reviewer will not notice. Blocks are added as each directory gains files.
+-- Scripts are ENUMERATED, in load order, rather than globbed. A glob sorts
+-- alphabetically, which is not dependency order.
+--
+-- nxc_lib's modules are loaded INTO this resource's Lua state through the
+-- `@resource/path` form. Every FiveM resource has its own state, so declaring
+-- nxc_lib as a dependency orders startup and shares no code at all.
+shared_scripts {
+    '@nxc_lib/shared/namespace.lua',
+    '@nxc_lib/shared/result.lua',
+    '@nxc_lib/shared/errors.lua',
+    '@nxc_lib/shared/correlation.lua',
+    '@nxc_lib/shared/time.lua',
+    '@nxc_lib/shared/serialize.lua',
+    '@nxc_lib/shared/validate.lua',
+    '@nxc_lib/shared/envelope.lua',
+    '@nxc_lib/shared/ratelimit.lua',
+    '@nxc_lib/shared/cancel.lua',
+    '@nxc_lib/shared/logger.lua',
+    '@nxc_lib/shared/locale.lua',
+    '@nxc_lib/shared/permissions.lua',
+    '@nxc_lib/shared/health.lua',
+    '@nxc_lib/shared/config_schema.lua',
+
+    'shared/namespace.lua',
+    'shared/scopes.lua',
+    'shared/registry.lua',
+}
 
 dependencies {
     'nxc_lib',
