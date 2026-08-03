@@ -24,6 +24,11 @@ Entries are added only for genuinely user-visible or contract-relevant changes.
   history.
 - Four capabilities, scoped per resource. **A sensitive value never leaves the server, for
   anyone**, because a management screen shows that a secret is set, not what it is.
+- Three database tables, verified against real MariaDB: foreign keys refuse an orphan
+  value, the unique constraint refuses a duplicate idempotency key, and every Lua type
+  round-trips through JSON with its type intact.
+- A server that starts, reaches its database, migrates, and announces readiness so
+  resources register.
 - 69 tests across 14 suites, including the real `nxc_core` schema registering unchanged.
 
 Initial development. No release has been made.

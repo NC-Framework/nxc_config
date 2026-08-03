@@ -47,6 +47,8 @@ shared_scripts {
     '@nxc_lib/shared/locale.lua',
     '@nxc_lib/shared/permissions.lua',
     '@nxc_lib/shared/health.lua',
+    '@nxc_lib/shared/persistence.lua',
+    '@nxc_lib/shared/migrations.lua',
     '@nxc_lib/shared/config_schema.lua',
 
     'shared/namespace.lua',
@@ -57,6 +59,17 @@ shared_scripts {
     'shared/publication.lua',
     'shared/access.lua',
 }
+
+server_scripts {
+    'server/database.lua',
+    'server/mariadb_store.lua',
+    'server/service.lua',
+    'server/startup.lua',
+}
+
+-- Migrations are ENUMERATED, not discovered. A .sql file appearing in a folder
+-- must not silently become a schema change.
+nxc_migration 'migrations/0001_config_tables.sql'
 
 dependencies {
     'nxc_lib',

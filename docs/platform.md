@@ -13,9 +13,18 @@ someone looked and found nothing, and an absent section is not.
 
 ### 1. Enhanced natives and platform APIs used
 
-**None — this resource has no code yet.**
+Confined to four server files. Everything in `shared/` is pure Lua and runs under `wasmoon`, which is what keeps 69 tests platform-independent.
 
-That is a statement about the present, not a claim about the design. The platform surface will be recorded as it is written.
+| Where | Uses |
+| --- | --- |
+| `server/startup.lua` | `IsDuplicityVersion`, `CreateThread`, `Wait`, `RegisterCommand` |
+| `server/service.lua` | `AddEventHandler`, `TriggerEvent`, `GetInvokingResource`, `exports` |
+| `server/database.lua` | `GetNumResourceMetadata`, `GetResourceMetadata`, `LoadResourceFile`, `exports.oxmysql` |
+| `server/mariadb_store.lua` | `json.encode` / `json.decode`, and the provider it is handed |
+
+**`GetInvokingResource` is a security boundary, not a convenience.** Registration takes the caller's identity from the platform rather than from the payload — a resource naming itself is making a claim, and accepting it would let any resource register a schema for any other.
+
+**Exports are used here deliberately**, which is the opposite of the decision made for `nxc_lib`. This is a service with one owner called by many, at a rate measured in restarts rather than frames, so the marshalling cost is irrelevant and the isolation is the point.
 
 ### 2. Deprecated or compatibility-only natives used
 
