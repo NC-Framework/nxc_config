@@ -87,9 +87,39 @@ function declaredSharedScripts() {
  * A fresh engine per test also keeps state isolated: a test that depends on
  * another test having run is a test that fails when run alone.
  */
+/**
+ * Enough CitizenFX for a module to LOAD. Not enough to certify anything.
+ *
+ * nxc_lib's `service_client.lua` is server-only and guards itself with
+ * `IsDuplicityVersion()`, which does not exist in plain Lua. Without these, every
+ * test in this suite failed on a shared file none of them were testing.
+ *
+ * THE SCOPE IS DELIBERATELY LOAD TIME. `CreateThread` is a no-op, so a body
+ * scheduled onto a thread never runs here, and nothing that depends on one
+ * should be read as tested. Cross-boundary behaviour is covered in nxc_lib's
+ * boundary harness against two real Lua states.
+ */
+const CITIZEN_LOAD_STUBS = `
+    function exports() end
+    function IsDuplicityVersion() return true end
+    function GetCurrentResourceName() return 'nxc_config' end
+    function GetInvokingResource() return nil end
+    function GetResourceState() return 'started' end
+    function GetResourceMetadata(_, key)
+        if key == 'version' then return '0.0.0-test' end
+        return nil
+    end
+    function CreateThread() end
+    function Wait() end
+    __gameTimerMs = 0
+    function GetGameTimer() __gameTimerMs = __gameTimerMs + 16 return __gameTimerMs end
+`;
+
 export async function createEngine() {
   const factory = new LuaFactory();
   const lua = await factory.createEngine();
+
+  await lua.doString(CITIZEN_LOAD_STUBS);
 
   for (const file of declaredSharedScripts()) {
     const source = readFileSync(file, 'utf8');

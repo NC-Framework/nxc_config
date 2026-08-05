@@ -24,7 +24,7 @@ nxc_legacy_compatibility 'none'
 
 author 'The Nexus Core Framework team'
 description 'Authoritative runtime configuration service for Nexus Core: schemas, scopes, drafts, publication, audit, rollback.'
-version '0.1.1'
+version '0.2.0'
 
 -- Scripts are ENUMERATED, in load order, rather than globbed. A glob sorts
 -- alphabetically, which is not dependency order.
@@ -50,6 +50,7 @@ shared_scripts {
     '@nxc_lib/shared/persistence.lua',
     '@nxc_lib/shared/migrations.lua',
     '@nxc_lib/shared/config_schema.lua',
+    '@nxc_lib/shared/service_client.lua',
 
     'shared/namespace.lua',
     'shared/scopes.lua',

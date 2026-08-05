@@ -15,6 +15,19 @@ Entries are added only for genuinely user-visible or contract-relevant changes.
 
 ## Unreleased
 
+## 0.2.0 — 2026-08-05
+
+### Added
+
+- Registers itself as a service with nxc_core, and exports `health`.
+
+### Changed
+
+- Health becomes serviceable when configuration is actually registered, not when
+  startup finishes. nxc_config announces after nxc_core has started, so at the
+  moment nxc_core finishes starting it is genuinely running on declared defaults.
+
+
 ### Added
 
 - Scope precedence resolution: `default → environment → global → resource → organization →

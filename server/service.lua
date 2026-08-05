@@ -213,5 +213,9 @@ function Service.publish(opts)
     return published
 end
 
+--- This resource's own health, for nxc_core's aggregate and for anyone asking
+--- directly. Plain, because a report behind a metatable arrives empty.
+exports('health', function() return Nxc.plain(Nxc.Health.report()) end)
+
 NxcConfig.Service = Service
 return Service

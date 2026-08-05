@@ -23,8 +23,19 @@ local ready, failure = false, nil
 ---@return boolean
 function Startup.isReady() return ready end
 
+-- Announced at load, NOT marked ready. nxc_config has a genuine asynchronous
+-- startup: it applies migrations and opens a store, and a consumer discovering
+-- it as ready before that has finished would read configuration that is not
+-- there yet. Readiness is set below, at the point it is true.
+Nxc.Service.start({
+    dependencies = { 'nxc_lib', 'nxc_core', 'oxmysql' },
+    contractVersion = NxcConfig.CONTRACT_VERSION,
+    capabilities = { 'configuration', 'publication' },
+})
+
 local function halt(headline, err)
     ready, failure = false, err
+    Nxc.Service.setState('failed')
     print('^1')
     print('^1========================================================================^7')
     print('^1 NXC_CONFIG DID NOT START^7')
@@ -104,6 +115,8 @@ CreateThread(function()
     ---------------------------------------------------------------- 4. open
     NxcConfig.Service.open(NxcConfig.MariaDBStore.create(scoped))
     ready, failure = true, nil
+    Nxc.Health.setConfigurationRegistered(true)
+    Nxc.Service.setState('ready')
 
     Nxc.Logger.info('startup.ready', {
         version = NxcConfig.VERSION,
